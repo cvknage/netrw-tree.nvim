@@ -1,4 +1,7 @@
-# netrw-tree.nvim
+# Netrw Tree
+**netrw-tree** is a lua plugin for Neovim that configures the default **[netrw](https://neovim.io/doc/user/pi_netrw.html)** so that it can functions like a tree style file browser.
+
+<img width="1133" alt="netrw-tree" src="https://github.com/cvknage/netrw-tree.nvim/assets/609099/b2cde8c7-af80-42c4-8278-2129103ac4dc">
 
 # Attributions
 
