@@ -3,6 +3,23 @@
 
 <img width="1133" alt="netrw-tree" src="https://github.com/cvknage/netrw-tree.nvim/assets/609099/b2cde8c7-af80-42c4-8278-2129103ac4dc">
 
+## Installation
+Install the plugin with your preferred package manager:
+
+### [lazy.nvim](https://github.com/folke/lazy.nvim)
+```lua
+  {
+    'cvknage/netrw-tree.nvim',
+    dependencies = {
+      'nvim-tree/nvim-web-devicons' -- optional
+    },
+    lazy = false,
+    keys = {
+      { "<leader>pv", "<cmd>Explore<cr>",  desc = "Project Volumes" },
+      { "<leader>pe", "<cmd>Lexplore<cr>", desc = "Project Explorer" },
+    },
+  }
+```
 # Attributions
 
 [netrw-tree.nvim](https://github.com/cvknage/netrw-tree.nvim) is based on the [netrw](https://github.com/doom-neovim/doom-nvim/tree/main/lua/doom/modules/features/netrw) module from [doom-nvim](https://github.com/doom-neovim/doom-nvim)
