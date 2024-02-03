@@ -43,11 +43,10 @@ vim.g.netrw_hide = 0
 -- 2 : vertically   splitting the window first
 -- 3 : open file in new tab
 -- 4 : act like "P" (ie. open previous window)
---vim.g.netrw_browse_split = 4
 vim.g.netrw_browse_split = 0
 
 -- Setup file operations commands
-local system_seperator = package.config:sub(1,1)
+local system_seperator = package.config:sub(1, 1)
 if system_seperator == "/" then
   -- Enable recursive copy of directories in *nix systems
   vim.g.netrw_localcopydircmd = "cp -r"
@@ -68,7 +67,7 @@ local function netrw_maps()
     return
   end
 
-  local opts = { silent = true }
+  local opts = { silent = false }
 
   -- Go to right window
   vim.api.nvim_buf_set_keymap(0, "n", "<C-l>", "<C-w>l", opts)
