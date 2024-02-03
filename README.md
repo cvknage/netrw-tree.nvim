@@ -22,4 +22,4 @@ Install the plugin with your preferred package manager:
 ```
 # Attributions
 
-[netrw-tree.nvim](https://github.com/cvknage/netrw-tree.nvim) is based on the [netrw](https://github.com/doom-neovim/doom-nvim/tree/main/lua/doom/modules/features/netrw) module from [doom-nvim](https://github.com/doom-neovim/doom-nvim)
+[netrw-tree.nvim](https://github.com/cvknage/netrw-tree.nvim) is based on the [netrw](https://github.com/doom-neovim/doom-nvim/blob/e62053c9ed919ae4576eb4c3e2dd5f80d7a6c0bd/lua/doom/modules/features/netrw/init.lua) module from [doom-nvim](https://github.com/doom-neovim/doom-nvim)
