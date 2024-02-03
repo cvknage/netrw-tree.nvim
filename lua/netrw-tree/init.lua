@@ -69,6 +69,9 @@ local function netrw_maps()
 
   local opts = { silent = false }
 
+  -- Refresh netrw
+  vim.api.nvim_buf_set_keymap(0, "n", "<C-r>", ":e .<CR>", opts)
+
   -- Go to right window
   vim.api.nvim_buf_set_keymap(0, "n", "<C-l>", "<C-w>l", opts)
 
@@ -77,6 +80,9 @@ local function netrw_maps()
 
   -- Open file and close netrw
   vim.api.nvim_buf_set_keymap(0, "n", "o", "<CR>:Lexplore<CR>", opts)
+
+  -- Go up one directory
+  vim.api.nvim_buf_set_keymap(0, "n", "h", "-", opts)
 
   -- Open file or directory
   vim.api.nvim_buf_set_keymap(0, "n", "l", "<CR>", opts)
@@ -153,6 +159,7 @@ local function draw_icons()
   if vim.bo.filetype ~= "netrw" then
     return
   end
+
   local is_devicons_available, devicons = xpcall(require, debug.traceback, "nvim-web-devicons")
   if not is_devicons_available then
     return
