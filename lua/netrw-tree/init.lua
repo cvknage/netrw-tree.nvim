@@ -35,7 +35,7 @@ vim.g.netrw_list_hide = vim.fn["netrw_gitignore#Hide"]()
 vim.g.netrw_hide = 0
 
 -- Preview files in a vertical split window
--- vim.g.netrw_preview = 1
+vim.g.netrw_preview = 1
 
 -- Open files in split
 -- 0 : re-use the same window (default)
@@ -82,7 +82,7 @@ local function netrw_maps()
   vim.api.nvim_buf_set_keymap(0, "n", "l", "<CR>", opts)
 
   -- Close netrw
-  vim.api.nvim_buf_set_keymap(0, "n", "q", ":Lexplore<CR>", opts)
+  vim.api.nvim_buf_set_keymap(0, "n", "q", ":q<CR>", opts)
 
   -- Create a new file and save it
   vim.api.nvim_buf_set_keymap(0, "n", "ff", "%:w<CR>:buffer #<CR>", opts)
@@ -249,3 +249,30 @@ vim.api.nvim_create_autocmd("TextChanged", {
     draw_icons()
   end,
 })
+
+function ToggleVexplore()
+  local expl_buf_num = vim.api.nvim_get_var("expl_buf_num")
+
+  -- Check if Vexplore is already open
+  local is_vexplore_open = expl_buf_num ~= nil
+
+  if is_vexplore_open then
+    -- Close Vexplore
+    vim.api.nvim_buf_delete(expl_buf_num, { force = true })
+
+    -- Unset the Vexplore buffer number
+    vim.api.nvim_set_var("expl_buf_num", nil)
+  else
+    -- Open Vexplore
+    vim.cmd("Vexplore")
+
+    -- Set the Vexplore buffer number
+    vim.api.nvim_set_var("expl_buf_num", vim.api.nvim_call_function("bufnr", { "%" }))
+  end
+end
+
+-- Initialize expl_buf_num to nil
+vim.api.nvim_set_var("expl_buf_num", nil)
+
+-- Declare new command: ToggleVexplore
+vim.cmd('command! -nargs=0 ToggleVexplore :lua ToggleVexplore()')
