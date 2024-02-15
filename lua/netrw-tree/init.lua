@@ -9,7 +9,7 @@ vim.g.netrw_banner = 0
 
 -- Keep the current directory and the browsing directory synced.
 -- This helps you avoid the move files error.
-vim.g.netrw_keepdir = 0
+vim.g.netrw_keepdir = 1
 
 -- Show directories first (sorting)
 vim.g.netrw_sort_sequence = [[[\/]$,*]]
