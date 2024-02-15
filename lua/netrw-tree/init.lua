@@ -1,62 +1,85 @@
--- Netew winsize
--- @default = 20
-vim.g.netrw_winsize = 20
+local M = {}
 
--- Netrw banner
--- 0 : Disable banner
--- 1 : Enable banner
-vim.g.netrw_banner = 0
-
--- Keep the current directory and the browsing directory synced.
--- This helps you avoid the move files error.
-vim.g.netrw_keepdir = 1
-
--- Show directories first (sorting)
-vim.g.netrw_sort_sequence = [[[\/]$,*]]
-
--- Human-readable files sizes
-vim.g.netrw_sizestyle = "H"
-
--- Netrw list style
--- 0 : thin listing (one file per line)
--- 1 : long listing (one file per line with timestamp information and file size)
--- 2 : wide listing (multiple files in columns)
--- 3 : tree style listing
-vim.g.netrw_liststyle = 3
-
--- Patterns for hiding files, e.g. node_modules
--- NOTE: this works by reading '.gitignore' file
-vim.g.netrw_list_hide = vim.fn["netrw_gitignore#Hide"]()
-
--- Show hidden files
--- 0 : show all files
--- 1 : show not-hidden files
--- 2 : show hidden files only
-vim.g.netrw_hide = 0
-
--- Preview files in a vertical split window
-vim.g.netrw_preview = 1
-
--- Open files in split
--- 0 : re-use the same window (default)
--- 1 : horizontally splitting the window first
--- 2 : vertically   splitting the window first
--- 3 : open file in new tab
--- 4 : act like "P" (ie. open previous window)
-vim.g.netrw_browse_split = 0
-
--- Setup file operations commands
 local system_seperator = package.config:sub(1, 1)
-if system_seperator == "/" then
+local is_nix_system = system_seperator == "/"
+
+local defaults = {
+  -- Netew winsize
+  -- @default = 20
+  netrw_winsize = 20,
+
+  -- Netrw banner
+  -- 0 : Disable banner
+  -- 1 : Enable banner
+  netrw_banner = 0,
+
+  -- Keep the current directory and the browsing directory synced.
+  -- This helps you avoid the move files error.
+  netrw_keepdir = 1,
+
+  -- Show directories first (sorting)
+  netrw_sort_sequence = [[[\/]$,*]],
+
+  -- Human-readable files sizes
+  netrw_sizestyle = "H",
+
+  -- Netrw list style
+  -- 0 : thin listing (one file per line)
+  -- 1 : long listing (one file per line with timestamp information and file size)
+  -- 2 : wide listing (multiple files in columns)
+  -- 3 : tree style listing
+  netrw_liststyle = 3,
+
+  -- Patterns for hiding files, e.g. node_modules
+  -- NOTE: this works by reading '.gitignore' file
+  netrw_list_hide = vim.fn["netrw_gitignore#Hide"](),
+
+  -- Show hidden files
+  -- 0 : show all files
+  -- 1 : show not-hidden files
+  -- 2 : show hidden files only
+  netrw_hide = 0,
+
+  -- Preview files in a vertical split window
+  netrw_preview = 1,
+
+  -- Open files in split
+  -- 0 : re-use the same window (default)
+  -- 1 : horizontally splitting the window first
+  -- 2 : vertically   splitting the window first
+  -- 3 : open file in new tab
+  -- 4 : act like "P" (ie. open previous window)
+  netrw_browse_split = 0,
+
   -- Enable recursive copy of directories in *nix systems
-  vim.g.netrw_localcopydircmd = "cp -r"
+  netrw_localcopydircmd = is_nix_system and "cp -r" or vim.g.netrw_localcopydircmd,
 
   -- Enable recursive creation of directories in *nix systems
-  vim.g.netrw_localmkdir = "mkdir -p"
+  netrw_localmkdir = is_nix_system and "mkdir -p" or vim.g.netrw_localmkdir,
 
   -- Enable recursive removal of directories in *nix systems
   -- NOTE: we use 'rm' instead of 'rmdir' (default) to be able to remove non-empty directories
-  vim.g.netrw_localrmdir = "rm -r"
+  netrw_localrmdir = is_nix_system and "rm -r" or vim.g.netrw_localrmdir,
+}
+
+M.options = {}
+
+function M.setup(options)
+  M.options = vim.tbl_deep_extend("force", {}, defaults, options or {})
+
+  vim.g.netrw_winsize = M.options.netrw_winsize
+  vim.g.netrw_banner = M.options.netrw_banner
+  vim.g.netrw_keepdir = M.options.netrw_keepdir
+  vim.g.netrw_sort_sequence = M.options.netrw_sort_sequence
+  vim.g.netrw_sizestyle = M.options.netrw_sizestyle
+  vim.g.netrw_liststyle = M.options.netrw_liststyle
+  vim.g.netrw_list_hide = M.options.netrw_list_hide
+  vim.g.netrw_hide = M.options.netrw_hide
+  vim.g.netrw_preview = M.options.netrw_preview
+  vim.g.netrw_browse_split = M.options.netrw_browse_split
+  vim.g.netrw_localcopydircmd = M.options.netrw_localcopydircmd
+  vim.g.netrw_localmkdir = M.options.netrw_localmkdir
+  vim.g.netrw_localrmdir = M.options.netrw_localrmdir
 end
 
 -- Highlight marked files in the same way search matches are
@@ -283,3 +306,5 @@ vim.api.nvim_set_var("expl_buf_num", nil)
 
 -- Declare new command: ToggleVexplore
 vim.cmd('command! -nargs=0 ToggleVexplore :lua ToggleVexplore()')
+
+return M

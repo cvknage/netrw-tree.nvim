@@ -13,6 +13,7 @@ Install the plugin with your preferred package manager:
     dependencies = {
       'nvim-tree/nvim-web-devicons' -- optional
     },
+    opts = { },
     lazy = false,
     keys = {
       { "<leader>pv", "<cmd>Explore<cr>",  desc = "Project Volumes" },
